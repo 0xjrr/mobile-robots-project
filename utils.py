@@ -55,3 +55,10 @@ def calculate_robot_position_and_orientation(matrix, front_val, back_val):
         return x, y, theta_degrees
     else:
         return None, None, None
+
+def ball_shooting_point(ball_coords: list, goal_coords: list, extension_value: int):
+    m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
+    b = ball_coords[1] - ( m * ball_coords[0] )  
+    x = ball_coords[0] - extension_value 
+    y = (m * x) + b
+    return x, y

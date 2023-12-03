@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import cv2
+from typing import Tuple, Union
 
 def detect_colored_dots_in_rgb(image, color_lower, color_upper):
     """
@@ -11,7 +12,7 @@ def detect_colored_dots_in_rgb(image, color_lower, color_upper):
     :param color_upper: The upper bound of the color range in RGB.
     :return: List of coordinates of detected dots.
     """
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     mask = cv2.inRange(image, color_lower, color_upper)
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -21,7 +22,7 @@ def detect_colored_dots_in_rgb(image, color_lower, color_upper):
         if M['m00'] != 0:
             cx = int(M['m10']/M['m00'])
             cy = int(M['m01']/M['m00'])
-            coordinates.append((cx, cy))
+            coordinates.append((cy, cx))
 
     return coordinates
 
@@ -56,9 +57,15 @@ def calculate_robot_position_and_orientation(matrix, front_val, back_val):
     else:
         return None, None, None
 
-def ball_shooting_point(ball_coords: list, goal_coords: list, extension_value: int):
+def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int) -> Tuple[Union[int, None], Union[int, None]]:
+    if ball_coords == () or goal_coords == ():
+        return None, None
     m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
     b = ball_coords[1] - ( m * ball_coords[0] )  
     x = ball_coords[0] - extension_value 
-    y = (m * x) + b
+    y = int((m * x) + b)
     return x, y
+
+def safe_get(lst, idx, default=None):
+    return lst[idx] if 0 <= idx < len(lst) else default
+

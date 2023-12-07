@@ -12,7 +12,6 @@ def detect_colored_dots_in_rgb(image, color_lower, color_upper):
     :param color_upper: The upper bound of the color range in RGB.
     :return: List of coordinates of detected dots.
     """
-    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     mask = cv2.inRange(image, color_lower, color_upper)
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 

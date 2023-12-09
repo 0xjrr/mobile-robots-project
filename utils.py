@@ -69,7 +69,7 @@ def safe_get(lst, idx, default=None):
     return lst[idx] if 0 <= idx < len(lst) else default
 
 def apply_homography(image, src_points, dst_points):
-    H, _ = cv2.findHomography(src_points, dst_points,cv2.RANSAC, 5.0)
+    H, _ = cv2.findHomography(src_points, dst_points, None, None)
     transformed_image = cv2.warpPerspective(image, H, (image.shape[1], image.shape[0]))
 
     return transformed_image

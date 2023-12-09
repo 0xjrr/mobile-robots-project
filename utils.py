@@ -68,3 +68,11 @@ def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value:
 def safe_get(lst, idx, default=None):
     return lst[idx] if 0 <= idx < len(lst) else default
 
+def get_angle_of_rotation(robot_coords, shooting_point):
+    delta_x = shooting_point[0] - robot_coords[0]
+    delta_y = shooting_point[1] - robot_coords[1]
+    desired_angle = math.degrees(math.atan2(delta_y,delta_x))
+
+    angle_of_rotation = desired_angle - robot_coords[2]
+
+    return angle_of_rotation

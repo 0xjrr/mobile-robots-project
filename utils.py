@@ -57,13 +57,14 @@ def calculate_robot_position_and_orientation(matrix, front_val, back_val):
         return None, None, None
 
 def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int) -> Tuple[Union[int, None], Union[int, None]]:
-    if ball_coords == () or goal_coords == ():
+    try:
+        m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
+        b = ball_coords[1] - ( m * ball_coords[0] )  
+        x = ball_coords[0] - extension_value 
+        y = int((m * x) + b)
+        return x, y
+    except:
         return None, None
-    m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
-    b = ball_coords[1] - ( m * ball_coords[0] )  
-    x = ball_coords[0] - extension_value 
-    y = int((m * x) + b)
-    return x, y
 
 def safe_get(lst, idx, default=None):
     return lst[idx] if 0 <= idx < len(lst) else default

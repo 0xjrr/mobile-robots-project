@@ -88,3 +88,10 @@ def move_to_shooting_point(angle_of_rotation, distance_to_point, rotation_thresh
             send_event("andar300")
         else:
             send_event("parar")
+
+def get_distance_between_two_points(point1, point2):
+    distance_x = point2[0] - point1[0]
+    distance_y = point2[1] - point1[0]
+    distance = math.sqrt(distance_x ** 2 + distance_y ** 2)
+
+    return distance

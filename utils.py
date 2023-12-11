@@ -83,17 +83,6 @@ def get_angle_of_rotation(robot_coords, shooting_point):
 
     return angle_difference
 
-def move_to_shooting_point(angle_of_rotation, distance_to_point, rotation_threshold, distance_threshold):
-    if(not (angle_of_rotation < rotation_threshold) and not(angle_of_rotation >= 0)):
-        if(angle_of_rotation < 0):
-            send_event("rodar_direita")
-        else:
-            send_event("rodar_esquerda")
-    else:
-        if(not (distance_to_point < distance_threshold) and not(distance_to_point >= 0)):
-            send_event("andar300")
-        else:
-            send_event("parar")
 
 def get_distance_between_two_points(point1, point2):
     distance_x = abs(point2[0] - point1[0])

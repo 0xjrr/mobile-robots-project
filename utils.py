@@ -71,11 +71,17 @@ def safe_get(lst, idx, default=None):
 def get_angle_of_rotation(robot_coords, shooting_point):
     delta_x = shooting_point[0] - robot_coords[0]
     delta_y = shooting_point[1] - robot_coords[1]
-    desired_angle = math.degrees(math.atan2(delta_y,delta_x))
 
-    angle_of_rotation = desired_angle - robot_coords[2]
+    # Calculate the angle to the target in radians, then convert to degrees
+    desired_angle = math.degrees(math.atan2(delta_y, delta_x))
 
-    return angle_of_rotation
+    # Calculate the difference between the desired angle and the robot's current angle
+    angle_difference = desired_angle - robot_coords[2]
+
+    # Normalize the angle to be within the range [-180, 180]
+    angle_difference = (angle_difference + 180) % 360 - 180
+
+    return angle_difference
 
 def move_to_shooting_point(angle_of_rotation, distance_to_point, rotation_threshold, distance_threshold):
     if(not (angle_of_rotation < rotation_threshold) and not(angle_of_rotation >= 0)):
@@ -90,8 +96,8 @@ def move_to_shooting_point(angle_of_rotation, distance_to_point, rotation_thresh
             send_event("parar")
 
 def get_distance_between_two_points(point1, point2):
-    distance_x = point2[0] - point1[0]
-    distance_y = point2[1] - point1[0]
+    distance_x = abs(point2[0] - point1[0])
+    distance_y = abs(point2[1] - point1[1])
     distance = math.sqrt(distance_x ** 2 + distance_y ** 2)
 
     return distance

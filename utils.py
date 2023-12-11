@@ -56,12 +56,12 @@ def calculate_robot_position_and_orientation(matrix, front_val, back_val):
     else:
         return None, None, None
 
-def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int) -> Tuple[Union[int, None], Union[int, None]]:
+def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int, isRobotShooting: bool) -> Tuple[Union[int, None], Union[int, None]]:
     if ball_coords == () or goal_coords == ():
         return None, None
     m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
     b = ball_coords[1] - ( m * ball_coords[0] )  
-    x = ball_coords[0] - extension_value 
+    x =  ball_coords[0] - extension_value if not isRobotShooting else ball_coords[0] + extension_value
     y = int((m * x) + b)
     return x, y
 
@@ -76,3 +76,15 @@ def get_angle_of_rotation(robot_coords, shooting_point):
     angle_of_rotation = desired_angle - robot_coords[2]
 
     return angle_of_rotation
+
+def move_to_shooting_point(angle_of_rotation, distance_to_point, rotation_threshold, distance_threshold):
+    if(not (angle_of_rotation < rotation_threshold) and not(angle_of_rotation >= 0)):
+        if(angle_of_rotation < 0):
+            send_event("rodar_direita")
+        else:
+            send_event("rodar_esquerda")
+    else:
+        if(not (distance_to_point < distance_threshold) and not(distance_to_point >= 0)):
+            send_event("andar300")
+        else:
+            send_event("parar")

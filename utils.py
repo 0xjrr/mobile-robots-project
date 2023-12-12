@@ -90,3 +90,22 @@ def get_distance_between_two_points(point1, point2):
     distance = math.sqrt(distance_x ** 2 + distance_y ** 2)
 
     return distance
+
+def find_midpoint(point1, point2):
+    """
+    Calculate the midpoint between two points.
+
+    Args:
+    point1 (tuple): The first point (x1, y1).
+    point2 (tuple): The second point (x2, y2).
+
+    Returns:
+    tuple: The midpoint (xm, ym) between the two points.
+    """
+    x1, y1 = point1
+    x2, y2 = point2
+
+    xm = (x1 + x2) / 2
+    ym = (y1 + y2) / 2
+
+    return (xm, ym)

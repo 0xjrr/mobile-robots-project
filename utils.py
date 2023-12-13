@@ -57,8 +57,13 @@ def calculate_robot_position_and_orientation(matrix, front_val, back_val):
         return None, None, None
 
 def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int, isRobotShooting: bool) -> Tuple[Union[int, None], Union[int, None]]:
-    if ball_coords == () or goal_coords == ():
+    if None in ball_coords or None in goal_coords:
         return None, None
+    
+    if ball_coords[0] == goal_coords[0]:
+        ball_coords[0] = ball_coords[0] + 0.1 
+
+    # Calculate the slope of the line between the ball and the goal
     m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
     b = ball_coords[1] - ( m * ball_coords[0] )  
     x =  ball_coords[0] - extension_value if not isRobotShooting else ball_coords[0] + extension_value

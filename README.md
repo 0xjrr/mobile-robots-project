@@ -2,6 +2,8 @@
 
 # Mobile Robots Project
 
+![](https://github.com/0xjrr/mobile-robots-project/working/project_demo.gif)
+
 ## Overview
 Welcome to the Mobile Robots Project! This project focuses on utilizing Python to control robots within the Aseba framework. We are integrating computer vision capabilities to enable our robots to detect objects and respond with appropriate commands.
 

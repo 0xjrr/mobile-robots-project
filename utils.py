@@ -32,17 +32,16 @@ def find_coordinates(matrix, value):
         return coordinates[0]  # Assuming only one occurrence
     return None
 
-def calculate_robot_position_and_orientation(matrix, front_val, back_val):
+def calculate_robot_position_and_orientation(front_val, back_val):
     """
     Calculate the position (x, y) and orientation (theta) of a robot.
-    :param matrix: 2D numpy array representing the environment.
     :param front_val: Integer representing the front of the robot in the matrix.
     :param back_val: Integer representing the back of the robot in the matrix.
     :return: Tuple (x, y, theta) where theta is in degrees.
     """
     # Find coordinates of the front and back
-    front_coords = find_coordinates(matrix, front_val)
-    back_coords = find_coordinates(matrix, back_val)
+    front_coords = front_val
+    back_coords = back_val
 
     if front_coords is not None and back_coords is not None:
         # Calculate (x, y)
@@ -56,18 +55,24 @@ def calculate_robot_position_and_orientation(matrix, front_val, back_val):
     else:
         return None, None, None
 
-def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int, isRobotShooting: bool) -> Tuple[Union[int, None], Union[int, None]]:
+def ball_shooting_point(ball_coords: tuple, goal_coords: tuple, extension_value: int) -> Tuple[Union[int, None], Union[int, None]]:
     if None in ball_coords or None in goal_coords:
         return None, None
-    
-    if ball_coords[0] == goal_coords[0]:
-        ball_coords[0] = ball_coords[0] + 0.1 
 
-    # Calculate the slope of the line between the ball and the goal
-    m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
-    b = ball_coords[1] - ( m * ball_coords[0] )  
-    x =  ball_coords[0] - extension_value if not isRobotShooting else ball_coords[0] + extension_value
-    y = int((m * x) + b)
+    if ball_coords[0] == goal_coords[0]+extension_value or ball_coords[0] == goal_coords[0]-extension_value:
+        x =  ball_coords[0]
+    else:
+        x =  ball_coords[0] - extension_value if ball_coords[0] < goal_coords[0] else  ball_coords[0] + extension_value
+
+
+    
+    if goal_coords[0] != ball_coords[0]:  # Avoid division by zero
+        m = (goal_coords[1] - ball_coords[1]) / (goal_coords[0] - ball_coords[0])
+        b = ball_coords[1] - (m * ball_coords[0])
+        y = int((m * x) + b)
+    else:
+        y = int(ball_coords[1])
+
     return x, y
 
 def safe_get(lst, idx, default=None):
@@ -111,6 +116,6 @@ def find_midpoint(point1, point2):
     x2, y2 = point2
 
     xm = (x1 + x2) / 2
-    ym = (y1 + y2) / 2
+    ym = (y1 + y2) / 4
 
     return (xm, ym)

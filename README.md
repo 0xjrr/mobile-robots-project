@@ -8,7 +8,7 @@ Welcome to the Mobile Robots Project! This project focuses on utilizing Python t
 ## Features
 - **Robot Control with Python**: Harnessing the power of Python to interact with robots in the Aseba environment.
 - **Object Detection**: Implementing computer vision techniques to detect objects in the robot's environment.
-- **Command Execution**: Translating visual input into actionable commands for the robots to execute.
+- **Command Execution**: Translating visual input into actionable commands for the robot to execute.
 
 ## Getting Started
 To get started with the Mobile Robots Project, follow these steps:
@@ -23,8 +23,9 @@ To get started with the Mobile Robots Project, follow these steps:
    - Install required Python packages: `pip install -r requirements.txt`
 
 3. **Running the Project**:
-   - Launch the Aseba environment.
-   - Run the main script: `python main.py`
+   - Launch the Aseba Thymio environment.
+   - Create events with 0 variables: walk300, walk200, walk100, walk50, left_turn, right_turn, stop
+   - Run: `tymio_control.ipynb`
 
 ## Usage
 Detailed usage instructions for controlling robots and processing visual input.
